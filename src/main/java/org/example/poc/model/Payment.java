@@ -11,16 +11,16 @@ public class Payment {
     private Long id;
     private String cardType;
     private String customerName;
-    private String creditCardNumber;
+    private String cardNumber;
     private String expireDate;
     private String securityCode;
-    public Payment(Long id, String cardType,String customerName,String creditCardNumber,String expireDate,String securityCode)
+    public Payment(Long id, String cardType,String customerName,String cardNumber,String expireDate,String securityCode)
     {
 
         this.id=id;
         this.cardType=cardType;
         this.customerName=customerName;
-        this.creditCardNumber=creditCardNumber;
+        this.cardNumber=cardNumber;
         this.expireDate=expireDate;
         this.securityCode=securityCode;
     }
@@ -35,9 +35,9 @@ public class Payment {
     {
         return customerName;
     }
-    public String getCreditCardNumber()
+    public String getCardNumber()
     {
-        return creditCardNumber;
+        return cardNumber;
     }
     public String getExpireDate()
     {

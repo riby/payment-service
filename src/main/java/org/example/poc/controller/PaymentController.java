@@ -20,12 +20,10 @@ public class PaymentController {
     @RequestMapping("/payment")
     public void hello(String message) {
         repo.save(new Payment(121L,"CreditCard","Ravneet","10201011","112","1234"));
-      // return "hello " + message;
     }
-    @RequestMapping("/getpayments")
+    @RequestMapping("/payments")
     public Iterable<Payment> getPayments(){
         return repo.findAll();
-
     }
 
 

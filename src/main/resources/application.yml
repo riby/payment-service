@@ -6,5 +6,4 @@ server:
     port: 8080
 
 cassandra:
-  contactpoints: 10.1.55.80,10.1.55.81
   keyspace: default_info

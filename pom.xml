@@ -39,12 +39,12 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter</artifactId>
-            </dependency>
+            </dependency>-->
          <dependency>
                <groupId>org.springframework.boot</groupId>
                <artifactId>spring-boot-starter-data-jpa</artifactId>
            </dependency>
-           <dependency>
+         <!--  <dependency>
                <groupId>org.springframework.boot</groupId>
                <artifactId>spring-boot-starter-data-rest</artifactId>
            </dependency>-->
@@ -54,6 +54,16 @@
                <artifactId>spring-boot-starter-test</artifactId>
                <scope>test</scope>
            </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-cql</artifactId>
+            <version>1.0.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-cassandra</artifactId>
+            <version>1.2.1.RELEASE</version>
+        </dependency>
        </dependencies>
 
        <build>
@@ -65,5 +75,11 @@
            </plugins>
        </build>
 
-
+    <repositories>
+        <repository>
+            <id>spring-milestone</id>
+            <name>Spring Maven MILESTONE Repository</name>
+            <url>http://repo.spring.io/libs-milestone</url>
+        </repository>
+    </repositories>
    </project>

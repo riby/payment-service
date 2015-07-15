@@ -8,25 +8,15 @@ import org.springframework.data.cassandra.mapping.Table;
 @Table
 public class Payment {
     @PrimaryKey
-    private Long id;
+    private String txId;
     private String cardType;
     private String customerName;
     private String cardNumber;
     private String expireDate;
     private String securityCode;
-    public Payment(Long id, String cardType,String customerName,String cardNumber,String expireDate,String securityCode)
-    {
+    public Payment() {}
 
-        this.id=id;
-        this.cardType=cardType;
-        this.customerName=customerName;
-        this.cardNumber=cardNumber;
-        this.expireDate=expireDate;
-        this.securityCode=securityCode;
-    }
-    public Long getId()
-    {return id;}
-
+    public String getTxId() { return txId; }
     public String getCardType()
     {
             return cardType;
@@ -48,5 +38,3 @@ public class Payment {
         return securityCode;
     }
 }
-
-

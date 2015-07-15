@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS default_info.payment (
+                id bigint,
+                accountnumber text,
+                cardcategory text,
+                cardtype text,
+                cardnumber text,
+                customername text,
+                expiredate text,
+                securitycode text,
+                PRIMARY KEY (id)
+                );
+
+url -X POST -d '{"txId": "aaa100", "cardType": "amex", "customerName": "adam zwickey", "cardNumber": "123456789", "expireDate": "101010", "securityCode": "123"}' -H "Content-Type: application/json" http://localhost:8080/payment

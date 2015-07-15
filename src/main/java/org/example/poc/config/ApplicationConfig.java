@@ -1,5 +1,7 @@
 package org.example.poc.config;
 
+import com.datastax.driver.core.AuthProvider;
+import com.datastax.driver.core.PlainTextAuthProvider;
 import com.datastax.driver.core.Session;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,14 +49,21 @@ public class ApplicationConfig {
         @Autowired
         private Environment env;
 
-//        @Override
-//        protected String getContactPoints() {
-//            return "contactPointsIP";
-//        }
+        @Override
+        protected String getContactPoints() {
+            return env.getProperty("cassandra.contactPoints");
+        }
 
         @Override
         public String getKeyspaceName() {
             return env.getProperty("cassandra.keyspace");
+        }
+
+        @Override
+        protected AuthProvider getAuthProvider() {
+            String user = env.getProperty("cassandra.user");
+            String pwd = env.getProperty("cassandra.pwd");
+            return new PlainTextAuthProvider(user, pwd);
         }
 
         @Override

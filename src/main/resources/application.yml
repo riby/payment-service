@@ -3,8 +3,36 @@ spring:
         name: payment-service
 server:
     port: 8080
+
 cassandra:
   keyspace: ${vcap.services.payment-db.credentials.keyspace_name:default_info}
   contactPoints: ${vcap.services.payment-db.credentials.node_ips:localhost}
   user: ${vcap.services.payment-db.credentials.username:u}
   pwd: ${vcap.services.payment-db.credentials.password:p}
+eureka:
+  client:
+    registerWithEureka: true
+    registryFetchIntervalSeconds: 10
+    serviceUrl:
+      defaultZone: ${vcap.services.service-registry.credentials.uri:http://127.0.0.1:8761}/eureka/
+  instance:
+    hostname: ${vcap.application.uris[0]:localhost}
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+---
+spring:
+  profiles: cloud
+eureka:
+  instance:
+    nonSecurePort: 80
+---
+logging:
+  level:
+     org:
+        example:
+            poc: DEBUG
+        springframework:
+           web: WARN
+           cloud: WARN
+     com:
+       netflix:  WARN

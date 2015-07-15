@@ -2,6 +2,8 @@ package org.example.poc.controller;
 
 import org.example.poc.dao.PaymentRepository;
 import org.example.poc.model.Payment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PaymentController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PaymentController.class);
+
     @Autowired
     private PaymentRepository _repo;
     @Autowired
@@ -25,9 +29,10 @@ public class PaymentController {
 
 
     @RequestMapping(value = "/payment", method = RequestMethod.POST)
-    public void hello(@RequestBody Payment payment) {
+    public void makePayment(@RequestBody Payment payment) {
         _repo.save(payment);
         sendPaymentConf(payment);
+        LOG.info("Payment sent");
     }
 
     @RequestMapping(value = "/payments", method = RequestMethod.GET)

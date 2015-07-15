@@ -6,11 +6,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableDiscoveryClient
+@EnableCircuitBreaker
 public class PaymentServiceApplication {
 
     private static final Logger LOG = LoggerFactory.getLogger(PaymentServiceApplication.class);

@@ -1,5 +1,6 @@
 package org.example.poc.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.example.poc.dao.PaymentRepository;
 import org.example.poc.model.Payment;
 import org.slf4j.Logger;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Calendar;
 
 
 /**
@@ -38,6 +41,19 @@ public class PaymentController {
     @RequestMapping(value = "/payments", method = RequestMethod.GET)
     public Iterable<Payment> getPayments(){
         return _repo.findAll();
+    }
+
+    @HystrixCommand(fallbackMethod="unhealthy")
+    @RequestMapping("/circuitBreakerTest")
+    public String circuitBreaker() {
+        if (Calendar.getInstance().get(Calendar.MINUTE) % 2 == 0) {
+            throw new RuntimeException();
+        }
+        return "HEALTHY!";
+    }
+
+    protected String unhealthy() {
+        return "UNHEALTHY.";
     }
 
     protected void sendPaymentConf(Payment p){

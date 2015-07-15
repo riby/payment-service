@@ -1,0 +1,12 @@
+---
+applications:
+- name: payment-service
+  memory: 512M
+  instances: 1
+  host: payment
+  path: target/payment-service-0.0.1-SNAPSHOT.jar
+  services:
+      - cassandra-service
+  env:
+      JAVA_OPTS: -Djava.security.egd=file:///dev/urandom
+

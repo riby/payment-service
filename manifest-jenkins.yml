@@ -1,0 +1,13 @@
+---
+applications:
+- name: payment-service
+  memory: 512M
+  instances: 1
+  path: payment-service-0.0.1-SNAPSHOT.jar
+  services:
+      - payment-db
+      - payment-broker
+      - service-registry
+  env:
+      JAVA_OPTS: -Djava.security.egd=file:///dev/urandom
+

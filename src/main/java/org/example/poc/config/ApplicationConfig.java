@@ -4,12 +4,12 @@ import com.datastax.driver.core.AuthProvider;
 import com.datastax.driver.core.PlainTextAuthProvider;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -111,12 +111,31 @@ public class ApplicationConfig {
 
         @Bean
         public RabbitTemplate rabbitTemplate() {
-            return new RabbitTemplate(connectionFactory());
+            RabbitTemplate r = new RabbitTemplate(connectionFactory());
+            r.setExchange(exchange().getName());
+            r.setQueue(queue().getName());
+            r.setRoutingKey(queue().getName());
+            r.setMessageConverter(new Jackson2JsonMessageConverter());
+            return r;
         }
 
         @Bean
-        public Queue myQueue() {
-            return new Queue("payment-confirm");
+        FanoutExchange exchange() {
+            FanoutExchange ex =  new FanoutExchange("payment.exchange");
+            ex.setShouldDeclare(true);
+            return ex;
+        }
+
+        @Bean
+        public Queue queue() {
+            Queue q = new Queue("payment-confirm");
+            q.setShouldDeclare(true);
+            return q;
+        }
+
+        @Bean
+        public Binding binding() {
+            return BindingBuilder.bind(queue()).to(exchange());
         }
     }
 

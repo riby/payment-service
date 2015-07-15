@@ -45,6 +45,7 @@
             <artifactId>spring-rabbit</artifactId>
             <version>1.4.5.RELEASE</version>
         </dependency>
+
        </dependencies>
 
        <build>

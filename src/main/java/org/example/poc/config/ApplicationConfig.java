@@ -2,15 +2,18 @@ package org.example.poc.config;
 
 import com.datastax.driver.core.AuthProvider;
 import com.datastax.driver.core.PlainTextAuthProvider;
-import com.datastax.driver.core.Session;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cassandra.config.java.AbstractCqlTemplateConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.config.java.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.data.cassandra.core.CassandraTemplate;
@@ -90,6 +93,30 @@ public class ApplicationConfig {
         @Override
         public String[] getEntityBasePackages() {
             return new String[]{"org.example.poc.model"};
+        }
+    }
+
+    @Configuration
+    public static class RabbitConfiguration {
+
+        @Bean
+        public ConnectionFactory connectionFactory() {
+            return new CachingConnectionFactory("localhost");
+        }
+
+        @Bean
+        public AmqpAdmin amqpAdmin() {
+            return new RabbitAdmin(connectionFactory());
+        }
+
+        @Bean
+        public RabbitTemplate rabbitTemplate() {
+            return new RabbitTemplate(connectionFactory());
+        }
+
+        @Bean
+        public Queue myQueue() {
+            return new Queue("payment-confirm");
         }
     }
 

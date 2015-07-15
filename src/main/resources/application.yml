@@ -4,7 +4,7 @@ spring:
 server:
     port: 8080
 cassandra:
-  keyspace: ${vcap.services.cassandra-service.credentials.keyspace_name:default_info}
-  contactPoints: ${vcap.services.cassandra-service.credentials.node_ips:localhost}
-  user: ${vcap.services.cassandra-service.credentials.username:u}
-  pwd: ${vcap.services.cassandra-service.credentials.password:p}
+  keyspace: ${vcap.services.payment-db.credentials.keyspace_name:default_info}
+  contactPoints: ${vcap.services.payment-db.credentials.node_ips:localhost}
+  user: ${vcap.services.payment-db.credentials.username:u}
+  pwd: ${vcap.services.payment-db.credentials.password:p}

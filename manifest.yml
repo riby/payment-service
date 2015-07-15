@@ -6,7 +6,7 @@ applications:
   host: payment
   path: target/payment-service-0.0.1-SNAPSHOT.jar
   services:
-      - cassandra-service
+      - payment-db
   env:
       JAVA_OPTS: -Djava.security.egd=file:///dev/urandom
 

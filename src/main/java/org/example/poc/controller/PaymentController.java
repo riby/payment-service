@@ -25,6 +25,7 @@ public class PaymentController {
         //repo.save(new Payment(121L,"CreditCard","Ravneet","10201011","112","1234"));
         repo.save(payment);
     }
+
     @RequestMapping(value = "/payments", method = RequestMethod.GET)
     public Iterable<Payment> getPayments(){
         return repo.findAll();
